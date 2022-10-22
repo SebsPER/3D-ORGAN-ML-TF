@@ -1,5 +1,6 @@
 import click, os
 from datetime import datetime
+import numpy as np
 
 @click.command()
 @click.option('--data', '-d',
@@ -37,6 +38,11 @@ def main(data, outdir, bs, workers, training_ratio, gradient_penalty, loss, loss
     get_log = lambda x: datetime.now().strftime('%Y-%m-%d %H:%M:%S - ') + x
     log = get_log('BEGIN TRAINING\n')
     print('-'*40)
+    
+    np_load_old = np.load
+
+    # modify the default parameters of np.load
+    np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True, **k)
     
     try:
         model = LoadModel(data, outdir, bs,
