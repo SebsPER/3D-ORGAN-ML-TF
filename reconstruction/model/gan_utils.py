@@ -2,7 +2,7 @@ import numpy as np
 from keras import backend as K
 from keras.models import Model
 from keras.layers import Input
-from tensorflow.keras.layers import Layer # keras.layers.merge import _Merge
+from keras.layers import Layer # keras.layers.merge import _Merge
 from keras.optimizers import Adam
 from functools import partial
 
@@ -19,7 +19,7 @@ def build_gan_arch(discriminator, generator, batch_size, gradient_penalty, loss,
 
     class RandomWeightedAverage(Layer): #_Merge instead of Layer
         def _merge_function(self, inputs):
-            weights = tf.random_uniform((batch_size, 1, 1, 1)) # K istead of tf
+            weights = K.random_uniform((batch_size, 1, 1, 1)) # K istead of tf
             return (weights * inputs[0]) + ((1 - weights) * inputs[1])
 
     loss = 'mae' if loss == 'l1' else 'mse'
