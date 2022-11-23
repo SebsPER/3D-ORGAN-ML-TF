@@ -1,9 +1,12 @@
 # 3d draw function
 import numpy as np
-import plotly.plotly as py
+import plotly as py
 import plotly.graph_objs as go
+#import chart_studio.plotly as py
+#import chart_studio.graph_objs as go
 from .data_prep import volume_to_point_cloud
 from plotly.offline import init_notebook_mode, iplot
+#from chart_studio.offline import init_notebook_mode, iplot
 init_notebook_mode(connected=True)
 
 def plot_vol(vol, s=10, c=(105,127,155), show_grid=False):
@@ -26,7 +29,7 @@ def plot3d(verts, s=10, c=(105,127,155), show_grid=False):
                 color='rgba(217, 217, 217, 0.14)',
                 width=0.5
             ),
-            opacity=1
+            opacity=0.5
         )
     )
     data = [trace]
@@ -65,7 +68,7 @@ def plot_reconstruction(vol1, vol2, s=10,
                 color='rgba(217, 217, 217, 0.14)',
                 width=0.5
             ),
-            opacity=1
+            opacity=0.6
         )
     )
     trace2 = go.Scatter3d(
@@ -78,7 +81,7 @@ def plot_reconstruction(vol1, vol2, s=10,
                 color='rgba(217, 217, 217, 0.14)',
                 width=0.5
             ),
-            opacity=1
+            opacity=0.6
         )
     )
     data = [trace1, trace2]

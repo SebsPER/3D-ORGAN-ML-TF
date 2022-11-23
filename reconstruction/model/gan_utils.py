@@ -2,9 +2,13 @@ import numpy as np
 from keras import backend as K
 from keras.models import Model
 from keras.layers import Input
-from keras.layers import Layer # keras.layers.merge import _Merge
+#from keras.layers import Layer 
+from keras.layers import Concatenate #.merge
+from tensorflow.python.framework.ops import disable_eager_execution
 from keras.optimizers import Adam
 from functools import partial
+
+disable_eager_execution()
 
 def wasserstein_loss(y_true, y_pred):
     return K.mean(y_true * y_pred)
@@ -17,7 +21,7 @@ def gradient_penalty_loss(y_true, y_pred, averaged_samples, gradient_penalty_wei
 
 def build_gan_arch(discriminator, generator, batch_size, gradient_penalty, loss, loss_multiply, size=32):
 
-    class RandomWeightedAverage(Layer): #_Merge instead of Layer
+    class RandomWeightedAverage(Concatenate): #_Merge instead of Layer
         def _merge_function(self, inputs):
             weights = K.random_uniform((batch_size, 1, 1, 1)) # K istead of tf
             return (weights * inputs[0]) + ((1 - weights) * inputs[1])
